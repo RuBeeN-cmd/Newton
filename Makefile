@@ -17,9 +17,12 @@ NAME = newton
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@echo $(_GREEN)Compiling $^...$(END)
-	@$(CC) $(CFLAGS) $^ -o $@ $(LIB)
+$(NAME): $(OBJ_DIR) $(OBJ)
+	@echo $(_GREEN)Compiling $(OBJ)...$(END)
+	@$(CC) $(CFLAGS) $(OBJ) -o $@ $(LIB)
+
+$(OBJ_DIR):
+	mkdir -p $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo $(_CYAN)Compiling $<...$(END)
@@ -27,7 +30,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 clean:
 	@echo $(_YELLOW)Cleaning $(OBJ)...$(END)
-	@rm -f $(OBJ)
+	@rm -rf $(OBJ_DIR)
 
 fclean: clean
 	@echo $(_RED)Cleaning $(NAME)...$(END)
